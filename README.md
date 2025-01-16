@@ -52,7 +52,7 @@ sudo systemctl status mongod
 sudo systemctl enable mongod
 ```
 
-### Resolving Dependency Issues
+#### Resolving Dependency Issues
 If you encounter the following error while installing MongoDB, refer to the fix mentioned below:
 
 ```
@@ -117,4 +117,31 @@ keytool -list -v -keystore selfsigned.jks
 
 ---
 
-You have successfully installed the Omada Controller on your Ubuntu server. For additional configuration, refer to the official TP-Link documentation.
+You have successfully installed the Omada Controller on your Ubuntu server, and the web interface is now securely accessible via HTTPS. To maintain security, it is highly recommended to restrict access to both the Ubuntu server and the Omada Controller only to authorized administrators. This helps ensure that sensitive network management tools are safeguarded against unauthorized access.
+
+### Updating the Omada Controller
+To keep your Omada Controller updated:
+1. Backup your existing configuration and data from the Omada Controller web interface. Follow these steps:
+   - Log in to the Omada Controller web interface.
+   - Navigate to **Global View** → **Settings** → **Maintenance** → **Backup**.
+   - Click **Backup** to download the backup file to your local system.
+   This ensures you have a safeguard in case anything goes wrong during the update.
+2. Check the [Omada Software Controller](https://support.omadanetworks.com/us/product/omada-software-controller/?resourceType=download) page for the latest version.
+3. Download the new version's tar.gz file.
+4. Extract the downloaded tar.gz file:
+   ```bash
+   tar zxvf <downloaded_file_name>.tar.gz
+   ```
+5. Navigate to the extracted directory and run the install script:
+   ```bash
+   sudo bash ./install.sh
+   ```
+   - If the Controller is still running, the installation script will automatically stop it. If stopping the service fails, you can manually stop it using:
+     ```bash
+     sudo tpeap stop
+     ```
+   - After stopping, the installation script will detect the existing version, ask if you want to continue, and proceed with the upgrade upon confirmation.
+6. Once the upgrade is complete, the Controller will restart automatically.
+7. Verify the update by accessing the web interface and ensuring all previous settings and data are intact.
+
+Taking a backup beforehand is crucial to ensure you can restore your settings and configurations if any issue arises during the update process. Regular updates help you stay secure and enjoy the latest features.
